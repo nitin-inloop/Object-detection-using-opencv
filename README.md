@@ -64,3 +64,4 @@ The detections will be saved as `detections.mp4` file.
 * [ResNet official implementation](https://github.com/tensorflow/models/tree/master/official/resnet)
 * [DeviceHive video analysis repo](https://github.com/devicehive/devicehive-video-analysis)
 * [A Street Walk in Shinjuku, Tokyo, Japan](https://www.youtube.com/watch?v=kZ7caIK4RXI)
+
