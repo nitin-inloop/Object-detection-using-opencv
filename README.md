@@ -1,55 +1,89 @@
 # Yolo v3 Object Detection in Tensorflow
+
 Yolo v3 is an algorithm that uses deep convolutional neural networks to detect objects. <br> <br>
 [Kaggle notebook](https://www.kaggle.com/aruchomu/yolo-v3-object-detection-in-tensorflow) 
+
+## Architecture & Workflow
+
+Here is a high-level overview of the YOLOv3 Architecture used in this project:
+
+```mermaid
+graph TD
+    A[Input Image/Video] --> B(YOLO v3 Model)
+    B --> C{Darknet-53 Feature Extractor}
+    C --> D[Feature Map 1: 13x13]
+    C --> E[Feature Map 2: 26x26]
+    C --> F[Feature Map 3: 52x52]
+    D --> G(Detection at Scale 1)
+    E --> H(Detection at Scale 2)
+    F --> I(Detection at Scale 3)
+    G --> J[Bounding Boxes & Classes]
+    H --> J
+    I --> J
+    J --> K[Non-Maximum Suppression - NMS]
+    K --> L[Final Output Detections]
+```
+
+And here is the general workflow for using this repository:
+
+```mermaid
+graph LR
+    A[Download Pretrained Weights] --> B[load_weights.py]
+    B --> C[Tensorflow Checkpoint]
+    C --> D[detect.py]
+    E[Input Images/Videos] --> D
+    D --> F[Outputs saved to 'detections/' folder]
+```
 
 ## Getting started
 
 ### Prerequisites
 This project is written in Python 3.6.6 using Tensorflow (deep learning), NumPy (numerical computing), Pillow (image processing), OpenCV (computer vision) and seaborn (visualization) packages.
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
 ### Downloading official pretrained weights
 Let's download official weights pretrained on COCO dataset. 
 
-```
+```bash
 wget -P weights https://pjreddie.com/media/files/yolov3.weights
 ```
 
 ### Save the weights in Tensorflow format
 Save the weights using `load_weights.py` script.
 
-```
+```bash
 python load_weights.py
 ```
 
 ## Running the model
 Now you can run the model using `detect.py` script. Don't forget to set the IoU (Intersection over Union) and confidence thresholds.
+
 ### Usage
-```
+```bash
 python detect.py <images/video> <iou threshold> <confidence threshold> <filenames>
 ```
+
 ### Images example
 Let's run an example using sample images.
-```
+```bash
 python detect.py images 0.5 0.5 data/images/dog.jpg data/images/office.jpg
 ```
 Then you can find the detections in the `detections` folder.
 <br>
 You should see something like this.
-```
-detection_1.jpg
-```
+
+**detection_1.jpg**
 ![alt text](https://github.com/heartkilla/yolo-v3/blob/master/data/detection_examples/detection_1.jpg)
-```
-detection_2.jpg
-```
+
+**detection_2.jpg**
 ![alt text](https://github.com/heartkilla/yolo-v3/blob/master/data/detection_examples/detection_2.jpg)
+
 ### Video example
 You can also run the script with video files.
-```
+```bash
 python detect.py video 0.5 0.5 data/video/shinjuku.mp4
 ```
 The detections will be saved as `detections.mp4` file.
@@ -64,4 +98,3 @@ The detections will be saved as `detections.mp4` file.
 * [ResNet official implementation](https://github.com/tensorflow/models/tree/master/official/resnet)
 * [DeviceHive video analysis repo](https://github.com/devicehive/devicehive-video-analysis)
 * [A Street Walk in Shinjuku, Tokyo, Japan](https://www.youtube.com/watch?v=kZ7caIK4RXI)
-
